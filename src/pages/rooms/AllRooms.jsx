@@ -337,7 +337,7 @@ const AllRooms = () => {
             setSearchText(e.target.value);
           }}
           />
-          <Button type='primary' onClick={() => navigate('/add-room')}><PlusOutlined/> Add Room</Button>
+          <Button type='primary' className='add-btn' onClick={() => navigate('/add-room')}><PlusOutlined/> Add Room</Button>
           <Button type='primary' style={{backgroundColor: "#096DD9"}} onClick={() => setOnOpenChangeRoom(true)}>Change Room</Button>
 
           <Dropdown trigger={['click']}
@@ -362,7 +362,7 @@ const AllRooms = () => {
                 </Form.Item>
                 <Form.Item style={{textAlign: "right"}}>
                   <Space>
-                    <Button type="primary" htmlType="submit">
+                    <Button type="primary" className={`add-btn`} htmlType="submit">
                       Filter
                     </Button>
                     <Button htmlType="reset">Reset</Button>
@@ -408,7 +408,7 @@ const AllRooms = () => {
                   <Input placeholder='Enter reservation id' autoComplete='off'/>
                 </Form.Item>
                 <Form.Item style={{marginBottom:0,textAlign:"right"}}>
-                  <Button type='primary' htmlType='submit'>Check</Button>
+                  <Button type='primary' className='add-btn block ml-auto' htmlType='submit'>Check</Button>
                 </Form.Item>
               </Form>
             </Modal>

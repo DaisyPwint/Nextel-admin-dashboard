@@ -2,7 +2,7 @@ import { Table, Typography, Button, message } from "antd"
 import styles from '../room.module.css';
 import { ArrowLeftOutlined} from "@ant-design/icons";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useCheckInRoomMutation } from "../../features/room/roomApiSlice";
+import { useCheckInRoomMutation, useGetAvailableRoomsByReservationIdQuery } from "../../features/room/roomApiSlice";
 
 // const data = [
 //     {
@@ -26,11 +26,9 @@ import { useCheckInRoomMutation } from "../../features/room/roomApiSlice";
 const ChangeRoom = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location)
-  const data = location?.state;
   const reservationId = new URLSearchParams(location?.search).get("reservationId");
 
-  console.log(data, reservationId)
+  const {data: availableRooms, isLoading} = useGetAvailableRoomsByReservationIdQuery(reservationId);
 
   const [checkInRoom] = useCheckInRoomMutation()
 
@@ -82,13 +80,17 @@ const ChangeRoom = () => {
     }
   }
 
+  if(isLoading){
+    return <div> Loading . . . </div>
+  }
+
   return (
     <>
       <div className={styles['add-header']}>      
         <ArrowLeftOutlined onClick={() => navigate(-1)} /> 
         <Typography.Title level={3} className={styles['add-title']}>Change Room</Typography.Title>
       </div>
-      <Table columns={columns} dataSource={data} rowKey={(record) => record.id} />
+      <Table columns={columns} dataSource={availableRooms} rowKey={(record) => record.id} />
     </>
   )
 }

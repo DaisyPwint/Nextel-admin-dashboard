@@ -93,7 +93,7 @@ if (error) {
               message: 'Please input room\'s amenities '
             }
           ]}>
-        <Checkbox.Group>
+        {/* <Checkbox.Group>
           <Row>
             <Col span={8}>
               <Checkbox value={1}>
@@ -126,7 +126,19 @@ if (error) {
               </Checkbox>
             </Col>
           </Row>
-        </Checkbox.Group>
+        </Checkbox.Group> */}
+
+<Checkbox.Group>
+      <Row>
+        {amenities.map((amenity) => (
+          <Col span={8} key={amenity.id}>
+            <Checkbox value={amenity.id}>
+              {amenity.name}
+            </Checkbox>
+          </Col>
+        ))}
+      </Row>
+    </Checkbox.Group>
       </Form.Item>
       <Form.Item name="imageUrl" label="Image URL"rules={[
             {
@@ -147,7 +159,7 @@ if (error) {
       <Form.Item className={styles['btn-group']}>
           <Space>
             <Button onClick={() => form.resetFields()}>Clear</Button>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" className={`add-btn`} htmlType="submit">
             Add
             </Button>
           </Space>

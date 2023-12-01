@@ -99,7 +99,7 @@ if (error) {
       <Form.Item className={styles['btn-group']}>
           <Space>
             <Button onClick={() => form.resetFields()}>Clear</Button>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" className={`add-btn`} htmlType="submit">
             Save
             </Button>
           </Space>

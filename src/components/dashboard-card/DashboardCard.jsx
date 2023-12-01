@@ -1,17 +1,18 @@
-import { UserOutlined } from '@ant-design/icons';
 import { Card, Typography, Space } from 'antd';
 import styles from './dashboardCard.module.css';
 
-const DashboardCard = ({title,value,style}) => {
+const DashboardCard = ({title,value,icon}) => {
   return (
     <Space direction='horizontal'>
       <Card className={styles.card}>
         <Space direction="horizontal" size={'large'}>
-          <UserOutlined className={styles.icon}/>
           <Space direction='vertical'>
-            <Typography.Text>{title}</Typography.Text>
+            <Typography.Text style={{fontSize:"18px",lineHeight:"18px"}}>{title}</Typography.Text>
             <Typography.Title level={2} className={styles.title}>{value}</Typography.Title>
           </Space>
+          <span class="material-symbols-outlined"  style={{fontSize: "50px"}}>
+            {icon}
+          </span>
         </Space>
       </Card>
     </Space>

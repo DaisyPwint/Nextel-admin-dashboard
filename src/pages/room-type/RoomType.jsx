@@ -166,7 +166,7 @@ const RoomType = () => {
             setSearchText(e.target.value);
           }}
           />
-          <Button type='primary' onClick={() => navigate('/add-room-type')}><PlusOutlined/> Add Room Type</Button>
+          <Button type='primary' className='add-btn' onClick={() => navigate('/add-room-type')}><PlusOutlined/> Add Room Type</Button>
         </div>
       </div>
       <Table columns={columns} dataSource={types}/>

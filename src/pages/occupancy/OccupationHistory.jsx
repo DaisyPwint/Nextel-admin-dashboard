@@ -2,21 +2,21 @@ import { Input, Table, Typography, Space, Button, Dropdown, theme, Divider, Form
 import styles from '../room.module.css';
 import { useState } from "react";
 import { FilterOutlined } from "@ant-design/icons";
-import { useGetOccupationHistoryQuery } from "../../features/occupation/occupiedApiSlice";
+import { useGetOccupationHistoryQuery, useGetOccupiedByFilterQuery } from "../../features/occupation/occupiedApiSlice";
 
 const { useToken } = theme;
-const options = [
-  {
-    value: 'single',
-    label: 'Single',
-  },{
-    value: 'double',
-    label: 'Double',
-  },{
-    value: 'family',
-    label: 'Family',
-  }
-]
+// const options = [
+//   {
+//     value: 'single',
+//     label: 'Single',
+//   },{
+//     value: 'double',
+//     label: 'Double',
+//   },{
+//     value: 'family',
+//     label: 'Family',
+//   }
+// ]
 // checkIn: "2023-11-15T09:12:57Z"
 // ​​
 // checkOut: "2023-11-16T06:46:48Z"
@@ -72,8 +72,15 @@ const OccupationHistory = () => {
   const { token } = useToken();
   const [searchText,setSearchText] = useState("");
   const [onFilter,setOnfilter] = useState(false);
-  const [filteredData,setFilteredData] = useState(null);
+  const [filterValues,setFilterValues] = useState({
+    type: null,
+    checkInDate : null,
+    checkOutDate : null
+  });
   const {data,isLoading,error} = useGetOccupationHistoryQuery();
+  const {data:filteredRooms,isLoading:isFRoomLoading} = useGetOccupiedByFilterQuery({
+    ...filterValues
+  })
 
   const contentStyle = {
     padding: "15px",
@@ -200,17 +207,21 @@ const OccupationHistory = () => {
         </Space>
       )
     },
-    {
-      title: 'Action',
-      key: 'action',
-      align: "center",
-      render: (_,record) => (
-          <Button type="primary" danger onClick={() => confirmationModal(record?.id)}  className={styles["confirm-button"]}>Check-out</Button>
-        )
-    },
+    // {
+    //   title: 'Action',
+    //   key: 'action',
+    //   align: "center",
+    //   render: (_,record) => (
+    //       <Button type="primary" className={`add-btn`} danger onClick={() => confirmationModal(record?.id)}  className={styles["confirm-button"]}>Check-out</Button>
+    //     )
+    // },
   ]
 
-  const formattedData = data?.map(info => transformedData(info));
+  const filteredHistory = data?.map(info => transformedData(info));
+  const formattedFilteredRooms = filteredHistory?.map(room => transformedData(room));
+  const dataSource = filterValues.type || filterValues.checkInDate || filterValues.checkOutDate
+? formattedFilteredRooms
+: filteredHistory;
 
   // const data = [
   //   {
@@ -253,23 +264,37 @@ const OccupationHistory = () => {
       'out-date-picker': fieldsValue['out-date-picker'] ? fieldsValue['out-date-picker'].format('DD/MM/YYYY') : null,
     }
 
-    const filteredValue = data.filter(record => {
-      const typeFilter = !values.type || record.type.toLowerCase() === values.type.toLowerCase();
+    // const filteredValue = data.filter(record => {
+    //   const typeFilter = !values.type || record.type.toLowerCase() === values.type.toLowerCase();
 
-      const checkInDate = values['in-date-picker'];
-      const checkOutDate = values['out-date-picker'];
+    //   const checkInDate = values['in-date-picker'];
+    //   const checkOutDate = values['out-date-picker'];
 
-      const checkInFilter = !checkInDate || record.checkIn.includes(checkInDate);
-      const checkOutFilter = !checkOutDate || record.checkOut.includes(checkOutDate);
+    //   const checkInFilter = !checkInDate || record.checkIn.includes(checkInDate);
+    //   const checkOutFilter = !checkOutDate || record.checkOut.includes(checkOutDate);
 
-      return typeFilter && checkInFilter && checkOutFilter;
-    })
-    setFilteredData(filteredValue);    
+    //   return typeFilter && checkInFilter && checkOutFilter;
+    // })
+    setFilterValues(values);    
     setOnfilter(false);
   }
 
+  const getUniqueTypes = (data) => {
+    const types = data?.map(room => room.roomType);
+    return Array.from(new Set(types))
+  }
+
+  const options = getUniqueTypes(data).map(type => ({
+    value: type,
+    label: type,
+  }))
+
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="spin-container">
+        <Spin size="large"/>
+      </div>
+    );
   }
 
   if (error) {
@@ -279,7 +304,7 @@ const OccupationHistory = () => {
   return (
     <>
       <div className={styles.header}>
-      <Typography.Title level={3}>Occupied Room Lists</Typography.Title>
+      <Typography.Title level={3} style={{color:"#262626",fontFamily:'Times New Roman, serif'}}>Occupation History</Typography.Title>
       <div className={styles.action}>
       <Input.Search placeholder="Search name,phone,email and room no" onSearch={(value) => {
           setSearchText(value);
@@ -309,7 +334,7 @@ const OccupationHistory = () => {
                 <Form.Item style={{textAlign: "right"}}>
                   <Space>
                     <Button htmlType="reset">Reset</Button>
-                    <Button type="primary" htmlType="submit">
+                    <Button type="primary" className={`add-btn`} htmlType="submit">
                       Filter
                     </Button>
                   </Space>
@@ -325,7 +350,7 @@ const OccupationHistory = () => {
         </Dropdown>
       </div>
       </div>
-      <Table columns={columns} dataSource={filteredData || formattedData} />
+      <Table columns={columns} dataSource={dataSource} />
     </>
   )
 }

@@ -1,5 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components{
+  .add-btn{
+    @apply !h-9 max-w-[170px] px-4 flex items-center justify-center gap-1 !rounded-md !bg-[#181818] !text-secondary-100
+  }
+}
+
 :root {
   /* font-family: 'Roboto', sans-serif; */
   line-height: 1.5;
@@ -22,3 +33,4 @@ body{
   left: 58%;
   transform: translate(-50%, -50%);
 }
+

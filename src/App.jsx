@@ -3,7 +3,7 @@ import AppLayout from './components/AppLayout';
 import color from './core/color';
 import { ConfigProvider } from 'antd';
 import ProtectedRoute from './routing/ProtectedRoute';
-import { Login, ResetPwd, ChangePwd, AddRoom, AddRoomType, AllRooms, Dashboard, DetailReservation, EditRoomType, OccupationHistory, OccupiedRooms, Reservations, ReservationHistory, RoomType, ChangeRoom, DetailRoomType } from './pages';
+import { Login, ResetPwd, ChangePwd, AddRoom, AddRoomType, AllRooms, Dashboard, DetailReservation, EditRoomType, OccupationHistory, OccupiedRooms, Reservations, ReservationHistory, RoomType, ChangeRoom, DetailRoomType, CompletedReservationDetail } from './pages';
 
 const ANT_THEME = {
   token: {
@@ -50,6 +50,7 @@ const App = () => {
           <Route path="reservations" element={<Reservations />}/>
           <Route path="reservations/:id" element={<DetailReservation />}/>
           <Route path="reservations-history" element={<ReservationHistory />}/>
+          <Route path="reservations-history/:id" element={<CompletedReservationDetail />    }/>
           <Route path="occupied-rooms" element={<OccupiedRooms />}/>
           <Route path="occupation-history" element={<OccupationHistory />}/>
         </Route>

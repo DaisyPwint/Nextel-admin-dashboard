@@ -224,7 +224,7 @@ const AddRoom = () => {
                           form.resetFields();
                           setShowClickAdd(false);
                         }}>Clear</Button>
-                        <Button type="primary" disabled={isAddButtonDisabled} onClick={() => handleAdd(field)}>
+                        <Button type="primary" className={`add-btn`} disabled={isAddButtonDisabled} onClick={() => handleAdd(field)}>
                           + Add 
                         </Button>
                       </Space>
@@ -296,7 +296,7 @@ const AddRoom = () => {
                           form.resetFields();
                           setShowClickAdd(false);
                         }}>Cancel</Button>
-                              <Button type="primary" htmlType="submit">
+                              <Button type="primary" className={`add-btn`} htmlType="submit">
                                 Save 
                               </Button>
                           </Space>

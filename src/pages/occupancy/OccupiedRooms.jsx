@@ -1,24 +1,24 @@
-import { Input, Table, Typography, Space, Button, Dropdown, theme, Divider, Form, DatePicker, Select, Modal } from "antd"
+import { Input, Table, Typography, Space, Button, Dropdown, theme, Divider, Form, DatePicker, Select, Modal, message } from "antd"
 import styles from '../room.module.css';
 import { useState } from "react";
 import { FilterOutlined } from "@ant-design/icons";
-import { useCheckOutOccupiedRoomMutation, useGetOccupiedRoomQuery } from "../../features/occupation/occupiedApiSlice";
+import { useCheckOutOccupiedRoomMutation, useGetOccupiedByFilterQuery, useGetOccupiedRoomQuery } from "../../features/occupation/occupiedApiSlice";
 import CustomButton from '../../components/button/CustomButton';
 
 const { useToken } = theme;
 
-const options = [
-  {
-    value: 'single',
-    label: 'Single',
-  },{
-    value: 'double',
-    label: 'Double',
-  },{
-    value: 'family',
-    label: 'Family',
-  }
-]
+// const options = [
+//   {
+//     value: 'single',
+//     label: 'Single',
+//   },{
+//     value: 'double',
+//     label: 'Double',
+//   },{
+//     value: 'family',
+//     label: 'Family',
+//   }
+// ]
 
 const transformedData = (occupiedObject) => {
   return {
@@ -62,8 +62,11 @@ const OccupiedRooms = () => {
   });
   const [openCheckOutModal, setOpenCheckOutModal] = useState(false);
   const [ occupiedId, setOccupiedId] = useState(null);
-  const {data,isLoading,error} = useGetOccupiedRoomQuery();
+  // const {data,isLoading,error} = useGetOccupiedRoomQuery();
   const [checkOutOccupiedRoom] = useCheckOutOccupiedRoomMutation();
+  const {data,isLoading, error} = useGetOccupiedByFilterQuery({
+    ...filterValues
+  });
 
   const contentStyle = {
     padding: "15px",
@@ -99,12 +102,13 @@ const OccupiedRooms = () => {
 //     }
 // ]
 
-const allOccupiedRooms = data?.map(info => transformedData(info));
-console.log(allOccupiedRooms);
+const dataSource = data?.map(info => transformedData(info));
+// console.log(allOccupiedRooms);
+// const  = filteredRooms?.map(room => transformedData(room));
 
-const dataSource = filterValues.type || filterValues.checkInDate || filterValues.checkOutDate
-? filteredRooms
-: allOccupiedRooms;
+// const dataSource = filterValues.type || filterValues.checkInDate || filterValues.checkOutDate
+// ? formattedFilteredRooms
+// : allOccupiedRooms;
 
   const onFinish = (fieldsValue) => {
     console.log(fieldsValue);
@@ -133,6 +137,7 @@ const dataSource = filterValues.type || filterValues.checkInDate || filterValues
 
     //   return typeFilter && checkInFilter && checkOutFilter;
     // })
+    console.log(filteredValues);
     setFilterValues(filteredValues);    
     setOnfilter(false);
   }
@@ -149,15 +154,14 @@ const dataSource = filterValues.type || filterValues.checkInDate || filterValues
 
   const handleCheckOutModal = async () => {
     console.log(occupiedId);
-    if(occupiedId){
-      const {data,error} = await checkOutOccupiedRoom(occupiedId);
-      // console.log(data);
+    const {data,error} = await checkOutOccupiedRoom(occupiedId);
+    console.log(data);
     if(data?.success){
-      message.success(data?.message);
+      message.success(data?.message)
+      cancelCheckOutModal()
     }else{
+      cancelCheckOutModal()
       message.error(error?.data?.message || error?.error)
-    }
-    cancelCheckOutModal()
     }
   }
 
@@ -232,13 +236,13 @@ const dataSource = filterValues.type || filterValues.checkInDate || filterValues
       key: 'action',
       align: "center",
       render: (_,record) => (
-          <Button type="primary" danger onClick={() => handleCheckOut(record?.id)}  className={styles["confirm-button"]}>Check-out</Button>
+          <Button type="primary" className={`add-btn`} danger onClick={() => handleCheckOut(record?.id)} >Check-out</Button>
         )
     },
   ]
 
   const getUniqueTypes = (data) => {
-    const types = data?.map(room => room.type);
+    const types = data?.map(room => room.roomType);
     return Array.from(new Set(types))
   }
 
@@ -246,6 +250,7 @@ const dataSource = filterValues.type || filterValues.checkInDate || filterValues
     value: type,
     label: type,
   }))
+  
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -288,7 +293,7 @@ const dataSource = filterValues.type || filterValues.checkInDate || filterValues
                 <Form.Item style={{textAlign: "right"}}>
                   <Space>
                     <Button htmlType="reset">Reset</Button>
-                    <Button type="primary" htmlType="submit">
+                    <Button type="primary" className={`add-btn`} htmlType="submit">
                       Filter
                     </Button>
                   </Space>
@@ -304,9 +309,9 @@ const dataSource = filterValues.type || filterValues.checkInDate || filterValues
         </Dropdown>
       </div>
       </div>
-      <Table columns={columns} dataSource={dataSource} />
-      {
-        openCheckOutModal && (
+      <Table columns={columns} dataSource={dataSource} rowKey={(record) => record?.id} />
+      
+         {/* openCheckOutModal && ( */}
           <Modal centered open={openCheckOutModal} onCancel={cancelCheckOutModal} footer={null} width={300} closeIcon={false}>
             <div className={styles['checkIn-container']}>
               <h2>Check Out!</h2>
@@ -317,8 +322,7 @@ const dataSource = filterValues.type || filterValues.checkInDate || filterValues
               </div>
             </div>
         </Modal>
-        )
-      }
+        
     </>
   )
 }

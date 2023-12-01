@@ -1,8 +1,9 @@
 import { useMemo } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from "chart.js";
 import { Pie } from "react-chartjs-2";
-import { DatePicker, Typography} from "antd";
+import { DatePicker} from "antd";
 import styles from './pieChart.module.css';
+import TypographyTitle from "../typo-title/TypographyTitle";
 import { useGetFilterRoomQuery } from "../../features/reservation/reserveApiSlice";
 import { useState } from "react";
 
@@ -17,11 +18,12 @@ const PieChart = () => {
   let outerLabel = [];
   const innerLabel = [];
   const colors = [
-    "#b91d47",
-    "#00aba9",
-    "#2b5797",
-    "#e8c3b9",
-    "#1e7145"
+    "#FA16C8",
+    "#FA5E8D",
+    "#F9C74F",
+    "#6BBD99",
+    "#FF9677",
+    "#40A9FF"
   ];
 
 const data = {
@@ -106,7 +108,10 @@ const options = {
   return (
     <div className={styles['container']}>
       <div className={styles['date-container']}>
-        <Typography.Title level={4} style={{ marginTop: '0.5em' }}>Room Reservation Chart</Typography.Title>
+        <div>
+          <TypographyTitle>Room Reservation Chart</TypographyTitle>
+          <p className="text-[#BFBFBF]">A showcase of the distribution of Reserved Rooms for a specific month.</p>
+        </div>
         <DatePicker onChange={onChange} picker="month"/>
       </div>
       <div>

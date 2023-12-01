@@ -1,11 +1,49 @@
+
 import React from 'react'
 import styles from './detail.module.css';
 import { useGetRoomTypeByIdQuery } from '../../features/room-type/typeApiSlice';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 const DetailRoomType = () => {
   const { id } = useParams();
   const {data:roomDetail,isLoading,error} = useGetRoomTypeByIdQuery(id);
+
+  console.log(roomDetail);
+  
+const renderOverview = () => (
+  <>
+    <p className='font-serif text-3xl font-bold text-gray-100 mt-10'>Overview</p>
+    <div className='flex flex-col gap-2 mt-8'>
+      {renderOverviewItem('Price per night', `USD ${roomDetail?.pricePerNight}`, "font-serif text-xl font-bold")}
+      {renderOverviewItem('Size', `${roomDetail?.size} m²`)}
+      {renderOverviewItem('Occupancy', roomDetail?.maximumCapacity)}
+      {renderOverviewItem('Bed type', 'Double/Twin')}
+    </div>
+  </>
+);
+
+const renderOverviewItem = (label, value, style) => (
+  <div className="grid grid-cols-2 gap-10 font-medium" key={label}>
+    <p>{label}</p>
+    <p> : <span className={` ${style} `} >  {value} </span> </p>
+  </div>
+);
+
+const renderAmenities = () => (
+  <>
+    <p className='font-serif text-3xl font-bold text-gray-100'>In-room Amenities</p>
+    <div className='grid md:grid-cols-3 grid-cols-2 gap-4 mt-8'>
+      {roomDetail?.amenities.map(renderAmenity)}
+    </div>
+  </>
+);
+
+const renderAmenity = (amenity) => (
+  <div key={amenity.id} className='capitalize flex items-center gap-2 text-gray-100'>
+    <span className='material-symbols-outlined'>{amenity.icon}</span>
+    <p>{amenity.name}</p>
+  </div>
+);
 
   if (isLoading) {
     return <div>Loading...</div>;

@@ -8,3 +8,38 @@
     align-items: center;
     outline: none;
 }
+
+.confirm-button {
+    background: #389E0D;
+    color: #fff;
+    outline: none;
+    border: none;
+  }
+  .confirm-button:hover {
+    color: #fff;
+  }
+
+  .cancel-button{
+    background: #F5222D;
+    color: #fff;
+    outline: none;
+    border: none;
+  }
+  
+  .confirm-button:disabled,.cancel-button:disabled {
+    background: #A0A0A0; /* Adjust the color for the disabled state */
+    color: #fff;
+  }
+  
+.yes-button{
+    background-color: #389E0D;
+    color: #fff;
+    border: 1px solid #389E0D;
+}
+.no-button{
+    background-color: transparent;
+}
+.button-container{
+  display: flex;
+  gap: 20px;
+}

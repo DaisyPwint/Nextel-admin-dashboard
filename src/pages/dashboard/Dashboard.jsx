@@ -1,5 +1,4 @@
-// import { useEffect } from 'react';
-import { Space, Typography, Spin} from 'antd';
+import { Space} from 'antd';
 import styles from './dashboard.module.css';
 import { DashboardCard,PieChart,BarChart } from '../../components';
 import { useNewReserveQuery } from '../../features/reservation/reserveApiSlice';
@@ -12,8 +11,8 @@ const Dashboard = () => {
 
   if (isLoading) {
     return (
-      <div className="spin-container" size="large">
-        <Spin />
+      <div className="spin-container">
+        <Spin size="large"/>
       </div>
     );
   }
@@ -24,11 +23,11 @@ const Dashboard = () => {
 
   return (
     <div className={styles.container}>
-      <Typography.Title level={2} style={{marginTop: 0}}>Overview</Typography.Title>
+      <Typography.Title level={4} style={{ fontSize: "36px",marginTop: '0.5em',color:"#262626",fontFamily:'Times New Roman, serif'}}>Overview</Typography.Title>
       <Space size={'large'} direction='horizontal'>
-        <DashboardCard title="New Reservation" value={newReserveCount}/>
-        <DashboardCard title="Occupied Rooms" value={availableCount}/>
-        <DashboardCard title="Available Rooms" value={occupationCount} />
+        <DashboardCard title="New Reservations" value={newReserveCount} icon="bookmark" />
+        <DashboardCard title="Occupied Rooms" value={availableCount} icon="passkey" />
+        <DashboardCard title="Available Rooms" value={occupationCount} icon="event_available" />
       </Space>
       <PieChart/>
       <BarChart/>

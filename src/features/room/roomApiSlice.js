@@ -61,6 +61,13 @@ const roomApiSlice = apiSlice.injectEndpoints({
             },
             invalidatesTags:["rooms"]
         }),
+        getAvailableRoomsByReservationId: builder.query({
+            query : (reservationId) => ({
+                url : `/rooms/available-rooms/${reservationId}`,
+                method : "GET",
+            }),
+            providesTags: ["reservations", "rooms", "roomTypes", "occupation"]
+        }),
         maintainRoom: builder.mutation({
             query: ({id,isMaintained}) => {
                 console.log(id,isMaintained);
@@ -76,18 +83,18 @@ const roomApiSlice = apiSlice.injectEndpoints({
         }),
         checkInRoom: builder.mutation({
             query: ({id,reservationId}) => ({
-                url: `/reserved-rooms/${id}/check-in`,
-                method: "PUT",
+                url: `/rooms/${id}/check-in`,
+                method: "POST",
                 body: {reservationId}
             }),
-            invalidatesTags:["rooms", "reservations"]
+            invalidatesTags:["rooms", "reservations", "occupation", "roomTypes"]
         }),
         checkInReservedRoom: builder.mutation({
             query: (id) => ({
                 url: `/reserved-rooms/${id}/check-in`,
                 method: "PUT",
             }),
-            invalidatesTags: ["rooms","reservations"]
+            invalidatesTags: ["rooms", "reservations", "occupation"]
         }),
         cancelReservedRoom: builder.mutation({
             query: (id) => ({
@@ -99,4 +106,4 @@ const roomApiSlice = apiSlice.injectEndpoints({
     })
 })
 
-export const { useGetAllRoomsQuery, useGetAvailableCountQuery, useGetOccupationCountQuery, useChangeRoomMutation, useAddRoomMutation, useGetRoomFilterQuery, useUpdateRoomMutation, useMaintainRoomMutation, useCheckInRoomMutation, useCheckInReservedRoomMutation, useCancelReservedRoomMutation} = roomApiSlice;
+export const { useGetAvailableRoomsByReservationIdQuery, useGetAllRoomsQuery, useGetAvailableCountQuery, useGetOccupationCountQuery, useChangeRoomMutation, useAddRoomMutation, useGetRoomFilterQuery, useUpdateRoomMutation, useMaintainRoomMutation, useCheckInRoomMutation, useCheckInReservedRoomMutation, useCancelReservedRoomMutation} = roomApiSlice;

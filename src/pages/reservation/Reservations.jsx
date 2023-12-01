@@ -83,6 +83,9 @@ const Reservations = () => {
     monthFilter : month?.format('YYYY-MM'),
    ...filterValues
   })
+
+  console.log(allReservations)
+
   const dataSource = allReservations?.map(item => transformedData(item));
 
   const [reservationId, setReservationId] = useState(null);
@@ -185,7 +188,7 @@ const Reservations = () => {
       title: 'ID',
       dataIndex: 'reservationId',
       filteredValue: [searchText],
-      sorter: (a,b) => a.reservationId - b.reservationId,
+      sorter: (a,b) => b.reservationId - a.reservationId,
       onFilter: (value,record) => {
         return (
           String(record.reservationId).toLowerCase().includes(value.toLowerCase()) ||
@@ -200,10 +203,10 @@ const Reservations = () => {
       dataIndex: 'guestInfo',
       align: "center",      
       render: (_,record) => (
-          <Space direction="vertical">
-            <div>{record.guestName}</div>
-            <div>{record.guestEmail}</div>
-          </Space>
+        <div style={{textAlign:"left"}}>
+        <span>{record.guestName}</span> <br />
+        <span style={{color: "#096DD9"}}>{record.guestEmail}</span>
+      </div>
         )
     },
     {
@@ -255,8 +258,8 @@ const Reservations = () => {
       align: "center",
       render: (_,record) => (
           <Space size="middle" style={{ whiteSpace: 'nowrap' }}>
-            <Button onClick={() => confirmationModal(record?.id)} disabled={record.status === 'Confirmed' || record.status === 'Canceled'} className={styles["confirm-button"]}>Confirm</Button>
-            <Button onClick={() => cancellationModal(record?.id)} disabled={record.status === 'Canceled' || record.status === 'Confirmed'} className={styles['cancel-button']}>Cancel</Button> 
+            <Button onClick={() => confirmationModal(record?.id)} disabled={record.status === 'Confirmed' || record.status === 'Canceled'} style={{backgroundColor: "#389E0D",color:"#fff"}}>Confirm</Button>
+            <Button onClick={() => cancellationModal(record?.id)} disabled={record.status === 'Canceled' || record.status === 'Confirmed'} style={{backgroundColor: "#F5222D"}}>Cancel</Button> 
           </Space>
         )
     },
@@ -300,7 +303,7 @@ const Reservations = () => {
         }} onChange={(e) => {
           setSearchText(e.target.value)
         }} style={{width: 250}}></Input.Search>
-        <Button type="primary" icon={<ReloadOutlined />} onClick={handleCheckExp}>Check Expired</Button>
+        <Button type="primary" className={`add-btn`} icon={<ReloadOutlined />} onClick={handleCheckExp}>Check Expired</Button>
         <Dropdown trigger={['click']}
         open={onFilter}
         onOpenChange={open => setOnfilter(open)}
@@ -330,10 +333,10 @@ const Reservations = () => {
                 </Space>
                 <Form.Item style={{textAlign: "right"}}>
                   <Space>
-                    <Button type="primary" htmlType="submit">
+                    <Button htmlType="reset">Reset</Button>
+                    <Button type="primary" className={`add-btn`} htmlType="submit">
                       Filter
                     </Button>
-                    <Button htmlType="reset">Reset</Button>
                   </Space>
                 </Form.Item>
               </Space>
@@ -361,8 +364,8 @@ const Reservations = () => {
           <h2>Cancel Reservation</h2>
             <p>Are you sure you want to cancel this reservation?</p>
             <div className={styles["button-container"]}>
-                <button className={styles["no-button"]} onClick={closeCancelModal}>No</button>
-                <button className={styles["yes-button"]} onClick={handleReservationCancel}>Yes</button>
+                <CustomButton className={styles["no-button"]} onClick={closeCancelModal}>No</CustomButton>
+                <CustomButton className={styles["yes-button"]} onClick={handleReservationCancel}>Yes</CustomButton>
             </div>
         </Modal>
       }

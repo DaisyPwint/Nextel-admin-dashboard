@@ -4,6 +4,7 @@ import { DatePicker, Typography } from "antd";
 import { useGetDailyIncomeQuery } from "../../features/reservation/reserveApiSlice";
 import styles from './barChart.module.css';
 import { useState, useMemo } from "react";
+import TypographyTitle from "../typo-title/TypographyTitle";
 
 ChartJS.register(
     CategoryScale,
@@ -44,7 +45,8 @@ const BarChart = () => {
           {
             label: 'Income',
             data: dailyIncomeData || [], 
-            backgroundColor: 'rgba(53, 162, 235, 0.5)',
+            backgroundColor: 'linear-gradient(180deg, rgba(67, 67, 67, 0.50) 0%, #434343 100%);',
+            // backgroundColor: "#43434380, #434343"
             barThickness: 30,
           }
         ]
@@ -88,7 +90,11 @@ const BarChart = () => {
   return (
     <div className={styles['container']}>
       <div className={styles['date-container']}>
-        <Typography.Title level={4} style={{ marginTop: '0.5em' }}>Income Chart</Typography.Title>
+        {/* <Typography.Title level={4} style={{ marginTop: '0.5em',color:"#262626",fontFamily:'Times New Roman, serif'}}>Income Chart</Typography.Title> */}
+        <div>
+          <TypographyTitle>Income Chart</TypographyTitle>
+          <p className="text-[#BFBFBF]">A showcase of the daily income for a specific month.</p>
+        </div>
         <DatePicker onChange={onChange} picker="month"/>
       </div>
       <div style={{ position: 'relative' }}>
@@ -100,6 +106,6 @@ const BarChart = () => {
     </div>
   )
 }
-
+// style={{color:"#262626",fontFamily:'Times New Roman, serif'}}
 
 export default BarChart

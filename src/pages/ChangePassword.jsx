@@ -11,7 +11,8 @@ const ChangePassword = () => {
   const [changePwd, {isLoading,error}] = useChangePwdMutation();
   const navigate = useNavigate();
   const [statusMessage, setStatusMessage] = useState(null);
-  const { token } = useSelector((state) => console.log(state));
+  // const { token } = useSelector((state) => console.log(state));
+  const { token } = useSelector((state) => state.auth);
 
   const onFinish = async (values) => {
     if(values.newPassword !== values.confirmPwd){

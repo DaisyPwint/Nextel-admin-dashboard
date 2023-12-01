@@ -28,7 +28,7 @@ const typeApiSlice = apiSlice.injectEndpoints({
         }),
         getAmenities: builder.query({
             query: () => '/amenities',
-            // providesTags: ["roomTypes"]
+            providesTags: ["roomTypes"]
         })
     })
 })

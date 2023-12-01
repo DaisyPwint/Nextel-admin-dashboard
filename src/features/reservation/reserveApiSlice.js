@@ -28,6 +28,10 @@ const reserveApiSlice = apiSlice.injectEndpoints({
             query: () => '/reservations/completed',
             providesTags: ['reservations'],
         }),
+        getCompletedReservationsById: builder.query({
+            query: (id) => `/reservations/completed/${id}`,
+            providesTags: ['reservations'],
+        }),
         getReservationByFilter: builder.query({
             query: ({ monthFilter, status, reservationDate, checkInDate, checkOutDate }) => {
                 console.log(monthFilter, status, reservationDate, checkInDate, checkOutDate);
@@ -80,4 +84,4 @@ const reserveApiSlice = apiSlice.injectEndpoints({
     }),
 });
 
-export const { useNewReserveQuery,useGetFilterRoomQuery,useGetDailyIncomeQuery,useGetReservationsQuery,useGetReserveByIdQuery,useGetReservationByFilterQuery, useUpdateStatusMutation, useGetCompletedReservationsQuery,useCheckExpReservationsMutation } = reserveApiSlice;
+export const {useGetCompletedReservationsByIdQuery , useNewReserveQuery,useGetFilterRoomQuery,useGetDailyIncomeQuery,useGetReservationsQuery,useGetReserveByIdQuery,useGetReservationByFilterQuery, useUpdateStatusMutation, useGetCompletedReservationsQuery,useCheckExpReservationsMutation } = reserveApiSlice;
