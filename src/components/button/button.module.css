@@ -1,0 +1,46 @@
+.button{
+    padding: 10px 15px;
+    width: 100px; 
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    outline: none;
+    font-size: 15px;
+}
+
+/* .confirm-button {
+    background: #389E0D;
+    color: #fff;
+    outline: none;
+    border: none;
+  }
+  .confirm-button:hover {
+    color: #fff;
+  }
+
+  .cancel-button{
+    background: #F5222D;
+    color: #fff;
+    outline: none;
+    border: none;
+  }
+  
+  .confirm-button:disabled,.cancel-button:disabled {
+    background: #A0A0A0; 
+    color: #fff;
+  } */
+  
+/* .yes-button{
+    background-color: #389E0D;
+    color: #fff;
+    border: 1px solid #389E0D;
+}
+.no-button{
+    background-color: transparent;
+    border: 1px solid #5c5c5c;
+}
+.button-container{
+  display: flex;
+  gap: 20px;
+} */

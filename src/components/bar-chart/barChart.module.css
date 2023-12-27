@@ -1,0 +1,28 @@
+.container{
+    padding: 30px;
+    width: 99%;
+    /* border: 1px solid rgb(33, 34, 34); */
+    border-radius: 24px;
+    background: #FAFAFA;
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.15);
+}
+.date-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    color: #BFBFBF;
+}
+.no-data-container {
+    position: relative;
+}
+.no-data-message {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: rgba(102, 102, 102, 0.5);
+  }

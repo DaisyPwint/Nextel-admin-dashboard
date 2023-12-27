@@ -1,0 +1,14 @@
+.container{
+    border-radius: 24px;
+    background: #FAFAFA;
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.15);
+    padding: 30px;
+    width: 99%;
+}
+.date-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    color: #BFBFBF;
+}

@@ -1,0 +1,116 @@
+.section{
+    padding-bottom: 48px;
+    text-align: left;
+    font-size: 16px;
+}
+.img-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.img{
+    background-size: cover;
+    background-position: center;
+    height: 384px;
+    width: 100%;
+    position: relative;
+}
+.title-container{
+    font-family: 'Times New Roman';
+    color: #FAFAFA;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px 32px;
+    background-color: rgba(0, 0, 0, 0%);
+    backdrop-filter: blur(8px);
+}
+.title-container h2{
+    font-size: 2.25rem;
+    margin-top: 0;
+    margin-bottom: 4px;
+    text-transform: capitalize;
+}
+.title-container p{
+    font-family: 'Roboto';
+    margin: 0;
+}
+.title-container p span{
+    font-weight: bold;
+    font-family: 'Times New Roman';
+    font-size: 1.25rem;
+}
+.container{
+    margin-top: 56px;
+}
+.overview-container{
+    display: flex;
+    gap: 4rem;
+    margin-bottom: 40px;
+}
+.overviews{
+    width: 400px;
+}
+.amenities{
+    flex: auto;
+}
+.title{
+    font-family: 'Times New Roman';
+    font-size: 1.875rem; 
+    line-height: 2.25rem;
+    font-weight: bold;
+    color: '#262626';
+}
+.overview-item-container{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 0.5rem;
+    font-weight: 500;
+}
+.overview-item-container p{
+    margin:0;
+}
+.overview-item{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.overview-item .price{
+    font-family: 'Times New Roman';
+    font-weight: bold;
+    font-size: larger;
+}
+.amenities-item-container{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 1rem;
+}
+.amenity-item-container{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #262626;
+}
+.amenity-item-container p{
+    margin: 0;
+}
+.des{
+    font-family: 'Times New Roman';
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    color: #262626;
+}
+.btn-container{
+    display: flex;
+    justify-content: end;
+    margin-top: 2.5rem;
+}
+.btn{
+    background-color: #C18653;
+    color: #fff;
+    padding: 1rem;
+    cursor: pointer;
+}
