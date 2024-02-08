@@ -2,6 +2,7 @@ export {default as Dashboard} from './dashboard/Dashboard';
 export {default as Reservations} from './reservation/Reservations'
 export {default as ReservationHistory} from './reservation/ReservationHistory'
 export {default as DetailReservation} from './reservation/DetailReservation';
+export {default as CompletedReservationDetail} from './reservation/CompletedReservationDetail';
 export {default as AddRoomType} from './room-type/AddRoomType';
 export {default as EditRoomType} from './room-type/EditRoomType';
 export {default as DetailRoomType} from './room-type/DetailRoomType';
